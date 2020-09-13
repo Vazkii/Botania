@@ -17,13 +17,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import vazkii.botania.api.mana.spark.ISparkAttachable;
-import vazkii.botania.common.entity.EntitySpark;
+import vazkii.botania.common.entity.EntityManaSpark;
 
 import javax.annotation.Nonnull;
 
-public class ItemSpark extends Item {
+public class ItemManaSpark extends Item {
 
-	public ItemSpark(Properties builder) {
+	public ItemManaSpark(Properties builder) {
 		super(builder);
 	}
 
@@ -40,7 +40,7 @@ public class ItemSpark extends Item {
 			if (attach.canAttachSpark(stack) && attach.getAttachedSpark() == null) {
 				if (!world.isRemote) {
 					stack.shrink(1);
-					EntitySpark spark = new EntitySpark(world);
+					EntityManaSpark spark = new EntityManaSpark(world);
 					spark.setPosition(pos.getX() + 0.5, pos.getY() + 1.25, pos.getZ() + 0.5);
 					world.addEntity(spark);
 					attach.attachSpark(spark);

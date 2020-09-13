@@ -27,8 +27,6 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -102,7 +100,7 @@ public class EntityCorporeaSpark extends EntitySparkBase implements ICorporeaSpa
 			firstTick = false;
 		}
 
-		if (master != null && (((Entity) master).removed || master.getNetwork() != getNetwork())) {
+		if (master != null && (master.entity().removed || master.getNetwork() != getNetwork())) {
 			master = null;
 		}
 	}
@@ -123,7 +121,7 @@ public class EntityCorporeaSpark extends EntitySparkBase implements ICorporeaSpa
 	public void registerConnections(ICorporeaSpark master, ICorporeaSpark referrer, List<ICorporeaSpark> connections) {
 		relatives.clear();
 		for (ICorporeaSpark spark : getNearbySparks()) {
-			if (spark == null || connections.contains(spark) || spark.getNetwork() != getNetwork() || spark.isMaster() || ((Entity) spark).removed) {
+			if (spark == null || connections.contains(spark) || spark.getNetwork() != getNetwork() || spark.isMaster() || spark.entity().removed) {
 				continue;
 			}
 
@@ -155,7 +153,7 @@ public class EntityCorporeaSpark extends EntitySparkBase implements ICorporeaSpa
 
 	private void findNetwork() {
 		for (ICorporeaSpark spark : getNearbySparks()) {
-			if (spark.getNetwork() == getNetwork() && !((Entity) spark).removed) {
+			if (spark.getNetwork() == getNetwork() && !spark.entity().removed) {
 				ICorporeaSpark master = spark.getMaster();
 				if (master != null) {
 					this.master = master;
@@ -174,24 +172,16 @@ public class EntityCorporeaSpark extends EntitySparkBase implements ICorporeaSpa
 
 		List<ICorporeaSpark> sparks = spark.getRelatives();
 		if (sparks.isEmpty()) {
-			EntitySpark.particleBeam(player, (Entity) spark, (Entity) spark.getMaster());
+			EntityManaSpark.particleBeam(player, spark.entity(), spark.getMaster().entity());
 		} else {
 			for (ICorporeaSpark endSpark : sparks) {
 				if (!checked.contains(endSpark)) {
-					EntitySpark.particleBeam(player, (Entity) spark, (Entity) endSpark);
+					EntityManaSpark.particleBeam(player, spark.entity(), endSpark.entity());
 					checked.add(endSpark);
 					displayRelatives(player, checked, endSpark);
 				}
 			}
 		}
-	}
-
-	@Override
-	public BlockPos getAttachPos() {
-		int x = MathHelper.floor(getPosX());
-		int y = MathHelper.floor(getPosY() - 1);
-		int z = MathHelper.floor(getPosZ());
-		return new BlockPos(x, y, z);
 	}
 
 	@Override

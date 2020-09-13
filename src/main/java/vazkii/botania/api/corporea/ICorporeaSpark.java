@@ -8,9 +8,9 @@
  */
 package vazkii.botania.api.corporea;
 
-import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
+
+import vazkii.botania.api.item.ISparkEntity;
 
 import java.util.List;
 
@@ -18,12 +18,7 @@ import java.util.List;
  * An interface for a Corporea Spark. Includes functions for handling
  * connections.
  */
-public interface ICorporeaSpark {
-
-	/**
-	 * @return The position to which this spark is attached for inventory purposes
-	 */
-	BlockPos getAttachPos();
+public interface ICorporeaSpark extends ISparkEntity {
 
 	/**
 	 * Called to register the connections for the spark network passed in. Parameters include the master spark,
@@ -84,11 +79,5 @@ public interface ICorporeaSpark {
 	 * Gets if this spark is considered a master spark.
 	 */
 	boolean isMaster();
-
-	/**
-	 * Gets the network that this spark is on, or the color it's displaying. Sparks may only connect to others
-	 * of the same network, and on changing network should trigger a re-cache of the previous network.
-	 */
-	DyeColor getNetwork();
 
 }

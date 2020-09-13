@@ -24,8 +24,8 @@ import net.minecraft.util.math.vector.Vector3d;
 
 import vazkii.botania.api.internal.VanillaPacketDispatcher;
 import vazkii.botania.api.mana.IManaPool;
+import vazkii.botania.api.mana.spark.IManaSpark;
 import vazkii.botania.api.mana.spark.ISparkAttachable;
-import vazkii.botania.api.mana.spark.ISparkEntity;
 import vazkii.botania.api.mana.spark.SparkHelper;
 import vazkii.botania.api.recipe.ITerraPlateRecipe;
 import vazkii.botania.common.block.ModBlocks;
@@ -84,7 +84,7 @@ public class TileTerraPlate extends TileMod implements ISparkAttachable, ITickab
 			ITerraPlateRecipe recipe = getCurrentRecipe(inv);
 			if (recipe != null) {
 				removeMana = false;
-				ISparkEntity spark = getAttachedSpark();
+				IManaSpark spark = getAttachedSpark();
 				if (spark != null) {
 					SparkHelper.getSparksAround(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, spark.getNetwork())
 							.filter(otherSpark -> spark != otherSpark && otherSpark.getAttachedTile() instanceof IManaPool)
@@ -184,14 +184,11 @@ public class TileTerraPlate extends TileMod implements ISparkAttachable, ITickab
 	}
 
 	@Override
-	public void attachSpark(ISparkEntity entity) {}
-
-	@Override
-	public ISparkEntity getAttachedSpark() {
-		List<Entity> sparks = world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(pos.up(), pos.up().add(1, 1, 1)), Predicates.instanceOf(ISparkEntity.class));
+	public IManaSpark getAttachedSpark() {
+		List<Entity> sparks = world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(pos.up(), pos.up().add(1, 1, 1)), Predicates.instanceOf(IManaSpark.class));
 		if (sparks.size() == 1) {
 			Entity e = sparks.get(0);
-			return (ISparkEntity) e;
+			return (IManaSpark) e;
 		}
 
 		return null;

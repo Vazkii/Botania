@@ -22,12 +22,12 @@ public final class SparkHelper {
 
 	public static final int SPARK_SCAN_RANGE = 12;
 
-	public static Stream<ISparkEntity> getSparksAround(World world, double x, double y, double z, DyeColor color) {
+	public static Stream<IManaSpark> getSparksAround(World world, double x, double y, double z, DyeColor color) {
 		return getSparksAround(world, x, y, z).stream().filter(s -> s.getNetwork() == color);
 	}
 
-	public static List<ISparkEntity> getSparksAround(World world, double x, double y, double z) {
-		return SparkHelper.getEntitiesAround(ISparkEntity.class, world, x, y, z);
+	public static List<IManaSpark> getSparksAround(World world, double x, double y, double z) {
+		return SparkHelper.getEntitiesAround(IManaSpark.class, world, x, y, z);
 	}
 
 	public static <T> List<T> getEntitiesAround(Class<? extends T> clazz, World world, double x, double y, double z) {

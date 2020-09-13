@@ -883,7 +883,7 @@ public final class ModBlocks {
 		DispenserBlock.registerDispenseBehavior(ModItems.obedienceStick, new BehaviourStick());
 		DispenserBlock.registerDispenseBehavior(ModItems.poolMinecart, new BehaviourPoolMinecart());
 		DispenserBlock.registerDispenseBehavior(ModBlocks.felPumpkin, new BehaviourFelPumpkin());
-		DispenserBlock.registerDispenseBehavior(ModItems.spark, new BehaviourSpark());
+		DispenserBlock.registerDispenseBehavior(ModItems.spark, new BehaviourManaSpark());
 		DispenserBlock.registerDispenseBehavior(ModBlocks.gaiaHead, new OptionalDispenseBehavior() {
 			@Nonnull
 			@Override
