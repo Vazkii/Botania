@@ -9,13 +9,19 @@
 package vazkii.botania.api.item;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
+import vazkii.botania.api.InterfaceRegistry;
 
 /**
  * This interface describes a tool that can be sorted by the Ring of
  * Correction.
  */
 public interface ISortableTool {
+	static InterfaceRegistry<Item, ISortableTool> registry() {
+		return ItemAPI.instance().getSortableToolRegistry();
+	}
 
 	/**
 	 * Gets the priority that this tool should have when being sorted. The

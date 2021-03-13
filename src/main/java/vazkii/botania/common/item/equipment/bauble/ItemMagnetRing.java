@@ -109,7 +109,7 @@ public class ItemMagnetRing extends ItemBauble {
 		}
 
 		ItemStack stack = item.getItem();
-		if (stack.isEmpty() || stack.getItem() instanceof IManaItem || stack.getItem() instanceof IRelic || ModTags.Items.MAGNET_RING_BLACKLIST.contains(stack.getItem())) {
+		if (stack.isEmpty() || stack.getItem() instanceof IManaItem || IRelic.registry().has(stack.getItem()) || ModTags.Items.MAGNET_RING_BLACKLIST.contains(stack.getItem())) {
 			return false;
 		}
 

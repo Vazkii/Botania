@@ -9,8 +9,10 @@
 package vazkii.botania.api.item;
 
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import vazkii.botania.api.InterfaceRegistry;
 import vazkii.botania.api.mana.IManaPool;
 
 /**
@@ -18,6 +20,9 @@ import vazkii.botania.api.mana.IManaPool;
  * a mana pool.
  */
 public interface IManaDissolvable {
+	static InterfaceRegistry<Item, IManaDissolvable> registry() {
+		return ItemAPI.instance().getManaDissolvableRegistry();
+	}
 
 	/**
 	 * Called for every tick the item is on a mana pool. If the stack has stack

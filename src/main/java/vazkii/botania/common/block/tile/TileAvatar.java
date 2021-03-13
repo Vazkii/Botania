@@ -46,8 +46,9 @@ public class TileAvatar extends TileSimpleInventory implements IAvatarTile, ITic
 		}
 
 		ItemStack stack = getItemHandler().getStackInSlot(0);
-		if (!stack.isEmpty() && stack.getItem() instanceof IAvatarWieldable) {
-			IAvatarWieldable wieldable = (IAvatarWieldable) stack.getItem();
+		IAvatarWieldable wieldable = IAvatarWieldable.registry().get(stack.getItem());
+		if (!stack.isEmpty() && wieldable != null) {
+			;
 			wieldable.onAvatarUpdate(this, stack);
 		}
 

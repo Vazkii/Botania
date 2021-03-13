@@ -78,7 +78,7 @@ public class AncientWillRecipeWrapper implements ICustomCraftingCategoryExtensio
 				copy.setCount(1);
 				group.set(2, copy);
 				group.set(0, getHelmetsWithWill(((ItemAncientWill) focused.getItem()).type, ingredients));
-			} else if (focused.getItem() instanceof IAncientWillContainer) { //helmet
+			} else if (IAncientWillContainer.registry().has(focused.getItem())) { //helmet
 				group.set(1, new ItemStack(focused.getItem()));
 				group.set(0, getWillsOnHelmet(focused.getItem()));
 			}
@@ -89,18 +89,20 @@ public class AncientWillRecipeWrapper implements ICustomCraftingCategoryExtensio
 		ImmutableList.Builder<ItemStack> builder = ImmutableList.builder();
 		for (ItemStack itemStack : ingredients.getOutputs(VanillaTypes.ITEM).get(0)) {
 			ItemStack toAdd = itemStack.copy();
-			((IAncientWillContainer) toAdd.getItem()).addAncientWill(toAdd, type);
+			IAncientWillContainer container = IAncientWillContainer.registry().get(toAdd.getItem());
+			container.addAncientWill(toAdd, type);
 			builder.add(toAdd);
 		}
 		return builder.build();
 	}
 
 	private List<ItemStack> getWillsOnHelmet(Item item) {
-		if (item instanceof IAncientWillContainer) {
+		IAncientWillContainer container = IAncientWillContainer.registry().get(item);
+		if (container != null) {
 			ImmutableList.Builder<ItemStack> builder = ImmutableList.builder();
 			for (IAncientWillContainer.AncientWillType type : IAncientWillContainer.AncientWillType.values()) {
 				ItemStack stack = new ItemStack(item);
-				((IAncientWillContainer) item).addAncientWill(stack, type);
+				container.addAncientWill(stack, type);
 				builder.add(stack);
 			}
 			return builder.build();

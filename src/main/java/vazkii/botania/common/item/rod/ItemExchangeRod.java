@@ -250,13 +250,13 @@ public class ItemExchangeRod extends Item implements IManaUsingItem, IWireframeC
 				return ret;
 			}
 
-			if (item instanceof IBlockProvider) {
+			if (IBlockProvider.registry().has(item)) {
 				providers.add(invStack);
 			}
 		}
 
 		for (ItemStack provStack : providers) {
-			IBlockProvider prov = (IBlockProvider) provStack.getItem();
+			IBlockProvider prov = IBlockProvider.registry().get(provStack.getItem());
 			if (prov.provideBlock(player, stack, provStack, block, doit)) {
 				return new ItemStack(block);
 			}
@@ -312,8 +312,8 @@ public class ItemExchangeRod extends Item implements IManaUsingItem, IWireframeC
 				count += invStack.getCount();
 			}
 
-			if (item instanceof IBlockProvider) {
-				IBlockProvider prov = (IBlockProvider) item;
+			IBlockProvider prov = IBlockProvider.registry().get(item);
+			if (prov != null) {
 				int provCount = prov.getBlockCount(player, stack, invStack, block);
 				if (provCount == -1) {
 					return -1;

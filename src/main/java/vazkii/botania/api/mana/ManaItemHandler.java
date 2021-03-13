@@ -20,7 +20,7 @@ import java.util.List;
 public interface ManaItemHandler {
 	LazyValue<ManaItemHandler> INSTANCE = new LazyValue<>(() -> {
 		try {
-			return (ManaItemHandler) Class.forName("vazkii.botania.common.impl.mana.ManaItemHandlerImpl").newInstance();
+			return (ManaItemHandler) Class.forName("vazkii.botania.common.impl.mana.ManaItemHandlerImpl").getConstructor().newInstance();
 		} catch (ReflectiveOperationException e) {
 			LogManager.getLogger().warn("Unable to find ManaItemHandlerImpl, using a dummy");
 			return new ManaItemHandler() {};

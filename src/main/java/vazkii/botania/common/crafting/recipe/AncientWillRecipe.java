@@ -39,7 +39,7 @@ public class AncientWillRecipe extends SpecialRecipe {
 				if (stack.getItem() instanceof ItemAncientWill && !foundWill) {
 					foundWill = true;
 				} else if (!foundItem) {
-					if (stack.getItem() instanceof IAncientWillContainer) {
+					if (IAncientWillContainer.registry().has(stack.getItem())) {
 						foundItem = true;
 					} else {
 						return false;
@@ -60,7 +60,7 @@ public class AncientWillRecipe extends SpecialRecipe {
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
 			if (!stack.isEmpty()) {
-				if (stack.getItem() instanceof IAncientWillContainer && item.isEmpty()) {
+				if (IAncientWillContainer.registry().has(stack.getItem()) && item.isEmpty()) {
 					item = stack;
 				} else {
 					will = ((ItemAncientWill) stack.getItem()).type; // we already verified this is a will in matches()
@@ -68,7 +68,8 @@ public class AncientWillRecipe extends SpecialRecipe {
 			}
 		}
 
-		IAncientWillContainer container = (IAncientWillContainer) item.getItem();
+		;
+		IAncientWillContainer container = IAncientWillContainer.registry().get(item.getItem());
 		if (container.hasAncientWill(item, will)) {
 			return ItemStack.EMPTY;
 		}

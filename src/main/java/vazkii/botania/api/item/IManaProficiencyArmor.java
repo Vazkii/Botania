@@ -14,6 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 
+import vazkii.botania.api.InterfaceRegistry;
 import vazkii.botania.api.mana.ManaProficiencyEvent;
 
 /**
@@ -24,6 +25,9 @@ import vazkii.botania.api.mana.ManaProficiencyEvent;
  * armor set, where only one piece implements it.
  */
 public interface IManaProficiencyArmor {
+	static InterfaceRegistry<Item, IManaProficiencyArmor> registry() {
+		return ItemAPI.instance().getManaProficiencyArmorRegistry();
+	}
 
 	default boolean shouldGiveProficiency(ItemStack armorStack, EquipmentSlotType slot, PlayerEntity player, ItemStack rod) {
 		return false;
@@ -39,7 +43,8 @@ public interface IManaProficiencyArmor {
 			ItemStack armor = player.getItemStackFromSlot(e);
 			if (!armor.isEmpty()) {
 				Item item = armor.getItem();
-				if (item instanceof IManaProficiencyArmor && ((IManaProficiencyArmor) item).shouldGiveProficiency(armor, e, player, rod)) {
+				IManaProficiencyArmor proficiencyArmor = IManaProficiencyArmor.registry().get(item);
+				if (proficiencyArmor != null && proficiencyArmor.shouldGiveProficiency(armor, e, player, rod)) {
 					proficient = true;
 					break;
 				}

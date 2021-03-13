@@ -8,12 +8,18 @@
  */
 package vazkii.botania.api.item;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
+import vazkii.botania.api.InterfaceRegistry;
 
 /**
  * An Item that implements this can be crafted with Phantom Ink.
  */
 public interface IPhantomInkable {
+	static InterfaceRegistry<Item, IPhantomInkable> registry() {
+		return ItemAPI.instance().getPhantomInkableRegistry();
+	}
 
 	boolean hasPhantomInk(ItemStack stack);
 

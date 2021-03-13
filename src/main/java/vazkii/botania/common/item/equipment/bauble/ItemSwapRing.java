@@ -35,11 +35,10 @@ public class ItemSwapRing extends ItemBauble {
 
 		PlayerEntity player = (PlayerEntity) entity;
 		ItemStack currentStack = player.getHeldItemMainhand();
-		if (currentStack.isEmpty() || !(currentStack.getItem() instanceof ISortableTool)) {
+		ISortableTool tool = ISortableTool.registry().get(currentStack.getItem());
+		if (currentStack.isEmpty() || tool == null) {
 			return;
 		}
-
-		ISortableTool tool = (ISortableTool) currentStack.getItem();
 
 		BlockRayTraceResult pos = ToolCommons.raytraceFromEntity(player, 4.5F, false);
 
@@ -68,8 +67,8 @@ public class ItemSwapRing extends ItemBauble {
 
 		for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
 			ItemStack stackInSlot = player.inventory.getStackInSlot(i);
-			if (!stackInSlot.isEmpty() && stackInSlot.getItem() instanceof ISortableTool && stackInSlot != currentStack) {
-				ISortableTool toolInSlot = (ISortableTool) stackInSlot.getItem();
+			ISortableTool toolInSlot = ISortableTool.registry().get(stackInSlot.getItem());
+			if (!stackInSlot.isEmpty() && toolInSlot != null && stackInSlot != currentStack) {
 				if (stackInSlot.getToolTypes().contains(typeToFind)) {
 					int priority = toolInSlot.getSortingPriority(stackInSlot, state);
 					if (priority > bestToolPriority) {

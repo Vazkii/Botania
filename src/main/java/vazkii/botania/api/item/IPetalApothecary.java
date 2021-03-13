@@ -8,9 +8,12 @@
  */
 package vazkii.botania.api.item;
 
+import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.util.IStringSerializable;
+
+import vazkii.botania.api.InterfaceRegistry;
 
 import javax.annotation.Nonnull;
 
@@ -21,6 +24,10 @@ import java.util.Locale;
  * be safely casted to TileEntity.
  */
 public interface IPetalApothecary {
+	static InterfaceRegistry<Block, IPetalApothecary> registry() {
+		return ItemAPI.instance().getPetalApothecaryRegistry();
+	}
+
 	enum State implements IStringSerializable {
 		EMPTY,
 		WATER,

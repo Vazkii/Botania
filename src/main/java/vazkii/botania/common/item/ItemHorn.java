@@ -85,8 +85,9 @@ public class ItemHorn extends Item {
 		for (BlockPos pos : BlockPos.getAllInBoxMutable(srcPos.add(-range, -rangeY, -range),
 				srcPos.add(range, rangeY, range))) {
 			Block block = world.getBlockState(pos).getBlock();
-			if (block instanceof IHornHarvestable
-					? ((IHornHarvestable) block).canHornHarvest(world, pos, stack, type)
+			IHornHarvestable harvestable = IHornHarvestable.registry().get(block);
+			if (harvestable != null
+					? harvestable.canHornHarvest(world, pos, stack, type)
 					: type == EnumHornType.WILD && block instanceof BushBlock && !block.isIn(ModTags.Blocks.SPECIAL_FLOWERS)
 							|| type == EnumHornType.CANOPY && BlockTags.LEAVES.contains(block)
 							|| type == EnumHornType.COVERING && block == Blocks.SNOW) {
@@ -102,8 +103,9 @@ public class ItemHorn extends Item {
 			BlockState state = world.getBlockState(currCoords);
 			Block block = state.getBlock();
 
-			if (block instanceof IHornHarvestable && ((IHornHarvestable) block).hasSpecialHornHarvest(world, currCoords, stack, type)) {
-				((IHornHarvestable) block).harvestByHorn(world, currCoords, stack, type);
+			IHornHarvestable harvestable = IHornHarvestable.registry().get(block);
+			if (harvestable != null && harvestable.hasSpecialHornHarvest(world, currCoords, stack, type)) {
+				harvestable.harvestByHorn(world, currCoords, stack, type);
 			} else {
 				world.destroyBlock(currCoords, true);
 			}

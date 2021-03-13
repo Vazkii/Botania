@@ -8,14 +8,20 @@
  */
 package vazkii.botania.api.item;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import vazkii.botania.api.InterfaceRegistry;
 
 /**
  * A Block that implements this can be uprooted by the various horns in Botania.
  */
 public interface IHornHarvestable {
+	static InterfaceRegistry<Block, IHornHarvestable> registry() {
+		return ItemAPI.instance().getHornHarvestableRegistry();
+	}
 
 	/**
 	 * Returns true if this block can be uprooted.

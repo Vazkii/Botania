@@ -40,7 +40,7 @@ public interface BotaniaAPI {
 
 	LazyValue<BotaniaAPI> INSTANCE = new LazyValue<>(() -> {
 		try {
-			return (BotaniaAPI) Class.forName("vazkii.botania.common.impl.BotaniaAPIImpl").newInstance();
+			return (BotaniaAPI) Class.forName("vazkii.botania.common.impl.BotaniaAPIImpl").getConstructor().newInstance();
 		} catch (ReflectiveOperationException e) {
 			LogManager.getLogger().warn("Unable to find BotaniaAPIImpl, using a dummy");
 			return new BotaniaAPI() {};

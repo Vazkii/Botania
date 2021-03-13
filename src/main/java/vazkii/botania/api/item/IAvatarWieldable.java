@@ -8,13 +8,19 @@
  */
 package vazkii.botania.api.item;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+
+import vazkii.botania.api.InterfaceRegistry;
 
 /**
  * An Item that implements this can be wielded by an Avatar.
  */
 public interface IAvatarWieldable {
+	static InterfaceRegistry<Item, IAvatarWieldable> registry() {
+		return ItemAPI.instance().getAvatarWieldableRegistry();
+	}
 
 	/**
 	 * Called on update of the avatar tile.

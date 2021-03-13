@@ -8,13 +8,20 @@
  */
 package vazkii.botania.api.item;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
+import vazkii.botania.api.InterfaceRegistry;
 
 /**
  * An item that implements this can have Ancient Wills
  * crafted onto it.
  */
 public interface IAncientWillContainer {
+	static InterfaceRegistry<Item, IAncientWillContainer> registry() {
+		return ItemAPI.instance().getAncientWillContainerRegistry();
+	}
+
 	enum AncientWillType {
 		AHRIM,
 		DHAROK,

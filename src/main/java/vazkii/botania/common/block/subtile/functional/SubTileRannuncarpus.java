@@ -91,15 +91,16 @@ public class SubTileRannuncarpus extends TileEntityFunctionalFlower {
 					continue;
 				}
 
-				if (stackItem instanceof BlockItem || stackItem instanceof IFlowerPlaceable) {
+				IFlowerPlaceable placeable = IFlowerPlaceable.registry().get(stackItem);
+				if (stackItem instanceof BlockItem || placeable != null) {
 					if (!validPositions.isEmpty()) {
 						BlockPos coords = validPositions.get(getWorld().rand.nextInt(validPositions.size()));
 						BlockRayTraceResult ray = new BlockRayTraceResult(new Vector3d(coords.getX() + 0.5, coords.getY() + 1, coords.getZ() + 0.5), Direction.UP, coords, false);
 						BlockItemUseContext ctx = new RannuncarpusPlaceContext(getWorld(), stack, ray, pos);
 
 						boolean success = false;
-						if (stackItem instanceof IFlowerPlaceable) {
-							success = ((IFlowerPlaceable) stackItem).tryPlace(this, ctx);
+						if (placeable != null) {
+							success = placeable.tryPlace(this, ctx);
 						}
 						if (stackItem instanceof BlockItem) {
 							success = ((BlockItem) stackItem).tryPlace(ctx).isSuccessOrConsume();

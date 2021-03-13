@@ -9,9 +9,12 @@
 package vazkii.botania.api.item;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+
+import vazkii.botania.api.InterfaceRegistry;
 
 /**
  * An item that implements this can break multiple blocks at once
@@ -19,6 +22,9 @@ import net.minecraft.util.math.BlockPos;
  * (see ItemTerraPick).
  */
 public interface ISequentialBreaker {
+	static InterfaceRegistry<Item, ISequentialBreaker> registry() {
+		return ItemAPI.instance().getSequentialBreakerRegistry();
+	}
 
 	void breakOtherBlock(PlayerEntity player, ItemStack stack, BlockPos pos, BlockPos originPos, Direction side);
 

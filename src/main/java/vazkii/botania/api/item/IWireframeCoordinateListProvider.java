@@ -9,8 +9,11 @@
 package vazkii.botania.api.item;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+
+import vazkii.botania.api.InterfaceRegistry;
 
 import javax.annotation.Nullable;
 
@@ -22,6 +25,9 @@ import java.util.List;
  * armor slot or bauble slots.
  */
 public interface IWireframeCoordinateListProvider {
+	static InterfaceRegistry<Item, IWireframeCoordinateListProvider> registry() {
+		return ItemAPI.instance().getWireframeCoordinateListProviderRegistry();
+	}
 
 	/**
 	 * Returns a list of BlockPos for the wireframes to draw.

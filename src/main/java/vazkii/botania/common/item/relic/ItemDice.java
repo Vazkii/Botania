@@ -108,7 +108,7 @@ public class ItemDice extends ItemRelic {
 
 		ServerPlayerEntity mpPlayer = (ServerPlayerEntity) player;
 		Item item = getRelics()[relic];
-		ResourceLocation advId = ((IRelic) item).getAdvancement();
+		ResourceLocation advId = IRelic.registry().get(item).getAdvancement();
 
 		if (advId != null) {
 			Advancement adv = ServerLifecycleHooks.getCurrentServer().getAdvancementManager().getAdvancement(advId);

@@ -27,7 +27,7 @@ import java.util.function.Function;
 public interface CorporeaHelper {
 	LazyValue<CorporeaHelper> INSTANCE = new LazyValue<>(() -> {
 		try {
-			return (CorporeaHelper) Class.forName("vazkii.botania.common.impl.corporea.CorporeaHelperImpl").newInstance();
+			return (CorporeaHelper) Class.forName("vazkii.botania.common.impl.corporea.CorporeaHelperImpl").getConstructor().newInstance();
 		} catch (ReflectiveOperationException e) {
 			LogManager.getLogger().warn("Unable to find CorporeaHelperImpl, using a dummy");
 			return new CorporeaHelper() {};

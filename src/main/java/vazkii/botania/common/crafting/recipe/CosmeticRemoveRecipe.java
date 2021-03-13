@@ -37,7 +37,8 @@ public class CosmeticRemoveRecipe extends SpecialRecipe {
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
 			if (!stack.isEmpty()) {
-				if (stack.getItem() instanceof ICosmeticAttachable && !(stack.getItem() instanceof ICosmeticBauble) && !((ICosmeticAttachable) stack.getItem()).getCosmeticItem(stack).isEmpty()) {
+				ICosmeticAttachable attachable = ICosmeticAttachable.registry().get(stack.getItem());
+				if (attachable != null && !ICosmeticBauble.registry().has(stack.getItem()) && !attachable.getCosmeticItem(stack).isEmpty()) {
 					foundAttachable = true;
 				} else {
 					return false;
@@ -60,7 +61,7 @@ public class CosmeticRemoveRecipe extends SpecialRecipe {
 			}
 		}
 
-		ICosmeticAttachable attachable = (ICosmeticAttachable) attachableItem.getItem();
+		ICosmeticAttachable attachable = ICosmeticAttachable.registry().get(attachableItem.getItem());
 		if (attachable.getCosmeticItem(attachableItem).isEmpty()) {
 			return ItemStack.EMPTY;
 		}

@@ -171,8 +171,9 @@ public class TilePool extends TileMod implements IManaPool, IKeyLocked, ISparkAt
 
 		ItemStack stack = item.getItem();
 
-		if (stack.getItem() instanceof IManaDissolvable) {
-			((IManaDissolvable) stack.getItem()).onDissolveTick(this, stack, item);
+		IManaDissolvable dissolvable = IManaDissolvable.registry().get(stack.getItem());
+		if (dissolvable != null) {
+			dissolvable.onDissolveTick(this, stack, item);
 		}
 
 		int age = ((AccessorItemEntity) item).getAge();

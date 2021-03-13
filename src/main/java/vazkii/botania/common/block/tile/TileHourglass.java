@@ -76,8 +76,9 @@ public class TileHourglass extends TileExposedSimpleInventory implements ITickab
 				for (Direction facing : Direction.values()) {
 					BlockPos pos = getPos().offset(facing);
 					BlockState state = world.getBlockState(pos);
-					if (state.getBlock() instanceof IHourglassTrigger) {
-						((IHourglassTrigger) state.getBlock()).onTriggeredByHourglass(world, pos, this);
+					IHourglassTrigger trigger = IHourglassTrigger.registry().get(state.getBlock());
+					if (trigger != null) {
+						trigger.onTriggeredByHourglass(world, pos, this);
 					}
 				}
 			}

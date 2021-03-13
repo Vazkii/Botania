@@ -31,7 +31,7 @@ import java.util.Map;
 public interface BotaniaAPIClient {
 	LazyValue<BotaniaAPIClient> INSTANCE = new LazyValue<>(() -> {
 		try {
-			return (BotaniaAPIClient) Class.forName("vazkii.botania.client.impl.BotaniaAPIClientImpl").newInstance();
+			return (BotaniaAPIClient) Class.forName("vazkii.botania.client.impl.BotaniaAPIClientImpl").getConstructor().newInstance();
 		} catch (ReflectiveOperationException e) {
 			LogManager.getLogger().warn("Unable to find BotaniaAPIClientImpl, using a dummy");
 			return new BotaniaAPIClient() {};

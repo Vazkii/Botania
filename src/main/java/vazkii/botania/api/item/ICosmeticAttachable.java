@@ -8,7 +8,10 @@
  */
 package vazkii.botania.api.item;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
+import vazkii.botania.api.InterfaceRegistry;
 
 /**
  * An Item that implements this interface can have cosmetic items attached to it.
@@ -17,6 +20,9 @@ import net.minecraft.item.ItemStack;
  * handled internally, but the cosmetic item has to be set as a container item.
  */
 public interface ICosmeticAttachable {
+	static InterfaceRegistry<Item, ICosmeticAttachable> registry() {
+		return ItemAPI.instance().getCosmeticAttachableRegistry();
+	}
 
 	/**
 	 * Gets the cosmetic item stored in the stack passed in.

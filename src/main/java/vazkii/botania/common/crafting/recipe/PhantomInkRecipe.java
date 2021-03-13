@@ -39,7 +39,7 @@ public class PhantomInkRecipe extends SpecialRecipe {
 				if (stack.getItem() == ModItems.phantomInk && !foundInk) {
 					foundInk = true;
 				} else if (!foundItem) {
-					if (stack.getItem() instanceof IPhantomInkable && stack.getItem().getContainerItem(stack).isEmpty()) {
+					if (IPhantomInkable.registry().has(stack.getItem()) && stack.getItem().getContainerItem(stack).isEmpty()) {
 						foundItem = true;
 					} else {
 						return false;
@@ -60,12 +60,12 @@ public class PhantomInkRecipe extends SpecialRecipe {
 
 		for (int i = 0; i < var1.getSizeInventory(); i++) {
 			ItemStack stack = var1.getStackInSlot(i);
-			if (!stack.isEmpty() && stack.getItem() instanceof IPhantomInkable && item.isEmpty()) {
+			if (!stack.isEmpty() && IPhantomInkable.registry().has(stack.getItem()) && item.isEmpty()) {
 				item = stack;
 			}
 		}
 
-		IPhantomInkable inkable = (IPhantomInkable) item.getItem();
+		IPhantomInkable inkable = IPhantomInkable.registry().get(item.getItem());
 		ItemStack copy = item.copy();
 		inkable.setPhantomInk(copy, !inkable.hasPhantomInk(item));
 		return copy;

@@ -136,13 +136,13 @@ public class ItemAstrolabe extends Item {
 				return;
 			}
 
-			if (!stackInSlot.isEmpty() && stackInSlot.getItem() instanceof IBlockProvider) {
+			if (!stackInSlot.isEmpty() && IBlockProvider.registry().has(stackInSlot.getItem())) {
 				stacksToCheck.add(stackInSlot);
 			}
 		}
 
 		for (ItemStack providerStack : stacksToCheck) {
-			IBlockProvider prov = (IBlockProvider) providerStack.getItem();
+			IBlockProvider prov = IBlockProvider.registry().get(providerStack.getItem());
 
 			if (prov.provideBlock(player, requestor, providerStack, block, false)) {
 				prov.provideBlock(player, requestor, providerStack, block, true);
@@ -170,13 +170,13 @@ public class ItemAstrolabe extends Item {
 					return true;
 				}
 			}
-			if (!stackInSlot.isEmpty() && stackInSlot.getItem() instanceof IBlockProvider) {
+			if (!stackInSlot.isEmpty() && IBlockProvider.registry().has(stackInSlot.getItem())) {
 				stacksToCheck.add(stackInSlot);
 			}
 		}
 
 		for (ItemStack providerStack : stacksToCheck) {
-			IBlockProvider prov = (IBlockProvider) providerStack.getItem();
+			IBlockProvider prov = IBlockProvider.registry().get(providerStack.getItem());
 			int count = prov.getBlockCount(player, stack, providerStack, block);
 			if (count == -1) {
 				return true;

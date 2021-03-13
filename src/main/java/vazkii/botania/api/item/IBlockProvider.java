@@ -10,7 +10,10 @@ package vazkii.botania.api.item;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
+import vazkii.botania.api.InterfaceRegistry;
 
 /**
  * An Item that implements this can provide blocks to other items that use them.
@@ -18,6 +21,9 @@ import net.minecraft.item.ItemStack;
  * the Rod of the Shifting Crust to pull blocks from it.
  */
 public interface IBlockProvider {
+	static InterfaceRegistry<Item, IBlockProvider> registry() {
+		return ItemAPI.instance().getBlockProviderRegistry();
+	}
 
 	/**
 	 * Provides the requested item. The doit paremeter specifies whether this is
