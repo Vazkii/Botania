@@ -17,6 +17,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -24,6 +25,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.NbtHelper;
+import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -105,12 +107,30 @@ public class ItemExchangeRod extends Item implements IManaUsingItem, IWireframeC
 	}
 
 	private ActionResult onLeftClick(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) {
+		if (player.isSpectator()) {
+			return ActionResult.PASS;
+		}
+
 		ItemStack stack = player.getStackInHand(hand);
-		if (!player.isSpectator() && !stack.isEmpty() && stack.getItem() == this && canExchange(stack) && ManaItemHandler.instance().requestManaExactForTool(stack, player, COST, false)) {
-			if (exchange(world, player, pos, stack, getState(stack))) {
-				ManaItemHandler.instance().requestManaExactForTool(stack, player, COST, true);
+		if (!stack.isEmpty() && stack.getItem() == this) {
+			// Returning SUCCESS or FAIL from this callback prevents vanilla from sending the C2S packet for block
+			// breaking. Returning PASS does a bunch of things we don't want, like creative block breaking and action
+			// acknowledgements, so send a packet directly to trigger this event on the server.
+			if (world.isClient()) {
+				if (!(player instanceof ClientPlayerEntity)) {
+					return ActionResult.PASS; // impossible
+				}
+				((ClientPlayerEntity) player).networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, pos, direction));
 				return ActionResult.SUCCESS;
 			}
+
+			if (canExchange(stack) && ManaItemHandler.instance().requestManaExactForTool(stack, player, COST, false)) {
+				if (exchange(world, player, pos, stack, getState(stack))) {
+					ManaItemHandler.instance().requestManaExactForTool(stack, player, COST, true);
+				}
+			}
+			// Always return SUCCESS with rod in hand to prevent any vanilla block breaking, esp. on second packet
+			return ActionResult.SUCCESS;
 		}
 		return ActionResult.PASS;
 	}
