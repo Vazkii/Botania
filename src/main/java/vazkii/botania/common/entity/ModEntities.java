@@ -61,7 +61,7 @@ public final class ModEntities {
 			.setUpdateInterval(40)
 			.setShouldReceiveVelocityUpdates(false)
 			.build("");
-	public static final EntityType<EntitySpark> SPARK = EntityType.Builder.<EntitySpark>create(EntitySpark::new, EntityClassification.MISC)
+	public static final EntityType<EntityManaSpark> SPARK = EntityType.Builder.<EntityManaSpark>create(EntityManaSpark::new, EntityClassification.MISC)
 			.size(0.2F, 0.5F)
 			.immuneToFire()
 			.trackingRange(4)

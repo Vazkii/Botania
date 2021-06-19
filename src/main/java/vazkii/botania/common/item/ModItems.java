@@ -308,7 +308,7 @@ public final class ModItems {
 	public static final Item laputaShard = new ItemLaputaShard(unstackable().rarity(Rarity.UNCOMMON));
 	public static final Item necroVirus = new ItemVirus(defaultBuilder());
 	public static final Item nullVirus = new ItemVirus(defaultBuilder());
-	public static final Item spark = new ItemSpark(defaultBuilder());
+	public static final Item spark = new ItemManaSpark(defaultBuilder());
 	public static final Item sparkUpgradeDispersive = new ItemSparkUpgrade(defaultBuilder(), SparkUpgradeType.DISPERSIVE);
 	public static final Item sparkUpgradeDominant = new ItemSparkUpgrade(defaultBuilder(), SparkUpgradeType.DOMINANT);
 	public static final Item sparkUpgradeRecessive = new ItemSparkUpgrade(defaultBuilder(), SparkUpgradeType.RECESSIVE);

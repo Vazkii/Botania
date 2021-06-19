@@ -12,16 +12,16 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 
 import vazkii.botania.client.core.handler.MiscellaneousIcons;
-import vazkii.botania.common.entity.EntitySpark;
+import vazkii.botania.common.entity.EntityManaSpark;
 
-public class RenderSpark extends RenderSparkBase<EntitySpark> {
+public class RenderManaSpark extends RenderSparkBase<EntityManaSpark> {
 
-	public RenderSpark(EntityRendererManager renderManager) {
+	public RenderManaSpark(EntityRendererManager renderManager) {
 		super(renderManager);
 	}
 
 	@Override
-	public TextureAtlasSprite getSpinningIcon(EntitySpark entity) {
+	public TextureAtlasSprite getSpinningIcon(EntityManaSpark entity) {
 		int upgrade = entity.getUpgrade().ordinal() - 1;
 		return upgrade >= 0 && upgrade < MiscellaneousIcons.INSTANCE.sparkUpgradeIcons.length
 				? MiscellaneousIcons.INSTANCE.sparkUpgradeIcons[upgrade].getSprite()

@@ -16,11 +16,11 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import vazkii.botania.common.item.ItemSpark;
+import vazkii.botania.common.item.ItemManaSpark;
 
 import javax.annotation.Nonnull;
 
-public class BehaviourSpark extends OptionalDispenseBehavior {
+public class BehaviourManaSpark extends OptionalDispenseBehavior {
 
 	@Nonnull
 	@Override
@@ -29,7 +29,7 @@ public class BehaviourSpark extends OptionalDispenseBehavior {
 		Direction facing = world.getBlockState(source.getBlockPos()).get(DispenserBlock.FACING);
 		BlockPos pos = source.getBlockPos().offset(facing);
 
-		setSuccessful(ItemSpark.attachSpark(world, pos, stack));
+		setSuccessful(ItemManaSpark.attachSpark(world, pos, stack));
 
 		return stack;
 	}

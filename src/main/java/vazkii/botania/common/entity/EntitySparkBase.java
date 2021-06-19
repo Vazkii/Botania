@@ -15,9 +15,12 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public abstract class EntitySparkBase extends Entity {
+import vazkii.botania.api.item.ISparkEntity;
+
+public abstract class EntitySparkBase extends Entity implements ISparkEntity {
 	private static final String TAG_INVIS = "invis";
 	private static final String TAG_NETWORK = "network";
 	private static final DataParameter<Integer> NETWORK = EntityDataManager.createKey(EntitySparkBase.class, DataSerializers.VARINT);
@@ -31,10 +34,17 @@ public abstract class EntitySparkBase extends Entity {
 		dataManager.register(NETWORK, 0);
 	}
 
+	@Override
+	public BlockPos getAttachPos() {
+		return getPositionUnderneath();
+	}
+
+	@Override
 	public DyeColor getNetwork() {
 		return DyeColor.byId(dataManager.get(NETWORK));
 	}
 
+	@Override
 	public void setNetwork(DyeColor color) {
 		dataManager.set(NETWORK, color.getId());
 	}
